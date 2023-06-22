@@ -71,7 +71,7 @@ function App() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post('https://example.com/api/upload', formData);
+        const response = await axios.post('http://127.0.0.2:8000', formData);
 
         // File uploaded successfully
         setUploadSuccess(true);
@@ -80,6 +80,7 @@ function App() {
       } catch (error) {
         // Error occurred while uploading the file
         setUploadError(true);
+        console.log("HELLO")
         console.error('Error uploading file:', error);
       }
     }
@@ -93,7 +94,7 @@ function App() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post('https://example.com/api/upload', formData);
+        const response = await axios.post('http://127.0.0.2:8000', formData);
 
         // File uploaded successfully
         setUploadSuccess(true);
