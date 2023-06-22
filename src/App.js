@@ -50,6 +50,7 @@ function App() {
   const [dragActive, setDragActive] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -75,12 +76,12 @@ function App() {
 
         // File uploaded successfully
         setUploadSuccess(true);
-        console.log('File uploaded successfully');
+        setMessage('File uploaded successfully');
         console.log('Response:', response.data);
       } catch (error) {
         // Error occurred while uploading the file
         setUploadError(true);
-        console.log("HELLO")
+        setMessage("Error uploading file")
         console.error('Error uploading file:', error);
       }
     }
