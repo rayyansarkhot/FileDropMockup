@@ -50,7 +50,6 @@ function App() {
   const [dragActive, setDragActive] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -72,16 +71,17 @@ function App() {
         const formData = new FormData();
         formData.append('file', file);
 
+        setUploadError(false);
+        setUploadSuccess(false);
+
         const response = await axios.post('http://127.0.0.2:8000', formData);
 
         // File uploaded successfully
         setUploadSuccess(true);
-        setMessage('File uploaded successfully');
         console.log('Response:', response.data);
       } catch (error) {
         // Error occurred while uploading the file
         setUploadError(true);
-        setMessage("Error uploading file")
         console.error('Error uploading file:', error);
       }
     }
@@ -95,8 +95,11 @@ function App() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post('http://127.0.0.2:8000', formData);
+        setUploadError(false);
+        setUploadSuccess(false);
 
+        const response = await axios.post('http://127.0.0.2:8000', formData);
+ 
         // File uploaded successfully
         setUploadSuccess(true);
         console.log('File uploaded successfully');
@@ -109,12 +112,17 @@ function App() {
     }
   };
 
-  const onButtonClick = () => {
+  const onButtonClick = async (e) => {
     const inputElement = document.getElementById('input-file-upload');
     if (inputElement) {
+      inputElement.value = null; // Reset the file input value
       inputElement.click();
     }
+    
+    handleChange(e);
+
   };
+  
 
   return (
     <div className="App">
@@ -130,7 +138,7 @@ function App() {
         <input
           type="file"
           id="input-file-upload"
-          multiple={false}
+          // multiple={false}
           onChange={handleChange}
           style={styles.inputFileUpload}
         />
