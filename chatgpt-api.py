@@ -29,16 +29,15 @@ async def save_file(file: UploadFile = File(...)):
     file_path = f"saves/{file.filename}"  # Specify the desired save location
     with open(file_path, "wb") as f:
         f.write(await file.read())
-    
-
-    return {"filename": file.filename, "message": "File uploaded successfully"}
 
     count = 0
     output_file_prefix = "output_file_" 
 
     # Create a new folder
     folder_path = "./textfiles"
-    os.makedirs(folder_path, exist_ok=True)
+    if os.path.exists(folder_path):
+    # Remove the folder and its contents if it already exists
+        os.rmdir(folder_path)
 
     filename = file.filename
     file_path = f'./saves/{filename}.pdf'
