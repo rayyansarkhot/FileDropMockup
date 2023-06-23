@@ -46,7 +46,7 @@ def gen_prompt_commodities(textdata):
 
 lines_printed = 0
 
-folder_path = "/Users/rheachandragiri/Downloads/textfiles"
+folder_path = "./textfiles"
 os.makedirs(folder_path, exist_ok=True)
 
 # Iterate through files in the folder
