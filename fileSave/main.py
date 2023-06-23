@@ -2,8 +2,8 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
-    max_request_size=100,  # 100 MB
-    max_response_size=100  # 100 MB
+    max_request_size=100*1024*1024,  # 100 MB
+    max_response_size=100*1024*1024  # 100 MB
     )
 
 # Configure CORS

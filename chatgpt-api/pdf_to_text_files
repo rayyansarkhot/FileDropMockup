@@ -1,0 +1,19 @@
+import fitz
+import os
+
+count = 0
+output_file_prefix = "output_file_" 
+
+# Create a new folder
+folder_path = "./textfiles"
+os.makedirs(folder_path, exist_ok=True)
+
+
+doc = fitz.open('./saves/{file.filename}.pdf')
+text = ""
+for page in doc:
+    current_page=page.get_text()
+    # Save text as a numbered text file in the new folder
+    with open(os.path.join(folder_path, "output_file_{}.txt".format(count)), "w", encoding="utf-8") as file:
+        file.write(current_page)
+        count += 1

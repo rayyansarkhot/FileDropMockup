@@ -50,6 +50,10 @@ function App() {
   const [dragActive, setDragActive] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
+  const [date, setDate] = useState('');
+  const [contact, setContact] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [commodity, setCommodity] = useState('');
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -75,6 +79,8 @@ function App() {
         setUploadSuccess(false);
 
         const response = await axios.post('http://127.0.0.2:8000', formData);
+        const response2 = await axios.post('http://127.0.0.3:8000', formData);
+        console.log(response2.data);
 
         // File uploaded successfully
         setUploadSuccess(true);
@@ -99,7 +105,19 @@ function App() {
         setUploadSuccess(false);
 
         const response = await axios.post('http://127.0.0.2:8000', formData);
- 
+        const response2 = await axios.post('http://127.0.0.3:8000', formData);
+        let date = response2.data[0].choices[0].text;
+        let contact = response2.data[1].choices[0].text;
+        let delivery = response2.data[2].choices[0].text;
+        let commodity = response2.data[3].choices[0].text;
+        console.log(`${date}\n${contact}\n${delivery}\n${commodity}`);
+        if (response2.data && response2.data.length >= 4) {
+          setDate(response2.data[0].choices[0].text);
+          setContact(response2.data[1].choices[0].text);
+          setDelivery(response2.data[2].choices[0].text);
+          setCommodity(response2.data[3].choices[0].text);
+        }
+        
         // File uploaded successfully
         setUploadSuccess(true);
         console.log('File uploaded successfully');
@@ -110,6 +128,7 @@ function App() {
         console.error('Error uploading file:', error);
       }
     }
+
   };
 
   const onButtonClick = async (e) => {
@@ -156,6 +175,14 @@ function App() {
         </label>
         {dragActive && <div id="drag-file-element" style={styles.dragFileElement}></div>}
         {uploadSuccess && <p>File uploaded successfully!</p>}
+        {uploadSuccess && (
+        <div style={styles.uploadedVariables}>
+          <p>Date: {date}</p>
+          <p>Contact: {contact}</p>
+          <p>Delivery: {delivery}</p>
+          <p>Commodity: {commodity}</p>
+        </div>
+      )}
         {uploadError && <p>Error uploading file. Please try again.</p>}
       </form>
     </div>
